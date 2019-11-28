@@ -7,6 +7,6 @@ services:
       - 5432:5432
     environment: 
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: poc
+      POSTGRES_DB: springbootdb
     volumes: 
       - ./postgres_data:/var/lib/postgresql/data
