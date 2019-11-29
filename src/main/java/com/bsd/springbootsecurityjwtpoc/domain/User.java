@@ -1,5 +1,7 @@
 package com.bsd.springbootsecurityjwtpoc.domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,4 +32,6 @@ public class User {
 	private String lastName;
 	@NotBlank
 	private String email;
+	@NotBlank
+	private Role[] roles;
 }
