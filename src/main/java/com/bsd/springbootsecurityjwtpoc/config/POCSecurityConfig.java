@@ -11,31 +11,16 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 @Configuration
 @EnableWebSecurity
 public class POCSecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		UserBuilder userBuilder = User.withDefaultPasswordEncoder();
-		auth.inMemoryAuthentication()
-			.withUser(userBuilder.username("john").password("test").roles("USER"));
-	}
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-			.antMatchers("/home")
-				.hasRole("USER")
-			.antMatchers("/")
-				.permitAll()
-			.and()
-				.formLogin();
-//					.loginPage("/login")
-//					.permitAll()
-//			.and()
-//				.logout()
-//					.permitAll();
+		auth.inMemoryAuthentication().withUser(userBuilder.username("john").password("test").roles("USER"));
 	}
 	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/home").hasRole("USER").antMatchers("/").permitAll().and().formLogin();
+	}
+
 }
