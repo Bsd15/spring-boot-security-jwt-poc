@@ -12,12 +12,12 @@ import com.bsd.springbootsecurityjwtpoc.exception.UserAlreadyExistsException;
 import com.bsd.springbootsecurityjwtpoc.repository.UserRepository;
 
 @Service
-public class UserServiceImple implements UserService {
+public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
 
 	@Autowired
-	public UserServiceImple(UserRepository userRepository) {
+	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
