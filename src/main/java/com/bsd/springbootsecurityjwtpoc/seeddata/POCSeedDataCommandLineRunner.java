@@ -1,4 +1,4 @@
-package com.bsd.springbootsecurityjwtpoc.repository;
+package com.bsd.springbootsecurityjwtpoc.seeddata;
 
 import java.util.HashSet;
 import java.util.Set;

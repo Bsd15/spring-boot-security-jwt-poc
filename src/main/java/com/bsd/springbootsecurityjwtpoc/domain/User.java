@@ -19,7 +19,7 @@ import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+//TODO Add Validation to the project
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
