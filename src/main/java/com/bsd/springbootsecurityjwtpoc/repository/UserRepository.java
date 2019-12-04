@@ -11,5 +11,4 @@ import com.bsd.springbootsecurityjwtpoc.domain.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query(value = "SELECT u FROM User u JOIN FETCH u.roles where u.userName = :userName")
 	Optional<User> findByUserName(@Param("userName") String userName);
-//	Optional<User> findByUserName(String userName);
 }
