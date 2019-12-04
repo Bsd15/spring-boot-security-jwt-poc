@@ -6,6 +6,5 @@ import com.bsd.springbootsecurityjwtpoc.domain.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 	boolean existsByRole(String role);
-
 	Optional<Role> findByRole(String role);
 }
