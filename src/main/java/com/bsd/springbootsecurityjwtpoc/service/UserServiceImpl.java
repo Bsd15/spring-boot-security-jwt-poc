@@ -12,6 +12,7 @@ import com.bsd.springbootsecurityjwtpoc.exception.UserAlreadyExistsException;
 import com.bsd.springbootsecurityjwtpoc.repository.UserRepository;
 
 @Service
+// TODO Complete the methods implementation.
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
