@@ -31,31 +31,33 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		Create a dummy user object and save it to the user Database.
-		Role userRole = roleService.getRoleByName("ROLE_USER");
-		log.debug(userRole.toString());
-		Set<Role> roles = new HashSet<Role>();
-		roles.add(userRole);
-		User dummyUser = new User();
-		dummyUser.setUserName("test1");
-		dummyUser.setPassword("test");
-		dummyUser.setEmail("e@mail.com");
-		dummyUser.setFirstName("First Name");
-		dummyUser.setLastName("Last Name");
-		dummyUser.setRoles(roles);
+		User dummyUser = userService.getUserByUserName("test");
 		log.debug(dummyUser.toString());
-		try {
-			userService.saveUser(dummyUser);
-		} catch (UserAlreadyExistsException e) {
-			log.error(e.getClass() + " CommandLineRunner Error.");
-		}
-		try {
-			User fetchedDummyUser = userService.getUserByUserName("test");
-			Set<Role> fetchedDummyUserRoles = fetchedDummyUser.getRoles();
-			log.debug(fetchedDummyUserRoles.toString());
-		} catch (UsernameNotFoundException e) {
-			log.error(e.getClass() + " CommandLineRunner Error on line 46 find the user by username");
-		}
+//		Create a dummy user object and save it to the user Database.
+//		Role userRole = roleService.getRoleByName("ROLE_USER");
+//		log.debug(userRole.toString());
+//		Set<Role> roles = new HashSet<Role>();
+//		roles.add(userRole);
+//		User dummyUser = new User();
+//		dummyUser.setUserName("test1");
+//		dummyUser.setPassword("test");
+//		dummyUser.setEmail("e@mail.com");
+//		dummyUser.setFirstName("First Name");
+//		dummyUser.setLastName("Last Name");
+//		dummyUser.setRoles(roles);
+//		log.debug(dummyUser.toString());
+//		try {
+//			userService.saveUser(dummyUser);
+//		} catch (UserAlreadyExistsException e) {
+//			log.error(e.getClass() + " CommandLineRunner Error.");
+//		}
+//		try {
+//			User fetchedDummyUser = userService.getUserByUserName("test");
+//			Set<Role> fetchedDummyUserRoles = fetchedDummyUser.getRoles();
+//			log.debug(fetchedDummyUserRoles.toString());
+//		} catch (UsernameNotFoundException e) {
+//			log.error(e.getClass() + " CommandLineRunner Error on line 46 find the user by username");
+//		}
 
 	}
 
