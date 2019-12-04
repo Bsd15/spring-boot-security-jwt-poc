@@ -32,34 +32,4 @@ public class Role {
 	private int id;
 	@Column(unique = true)
 	private String role;
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-	@JoinTable(name = "users_role",
-	joinColumns = @JoinColumn(name = "role_id"),
-	inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private List<User> users;
-	
-	/**
-	 * Constructor that takes in N number of users as argument.
-	 * @param id
-	 * @param role
-	 * @param users
-	 */
-	public Role(int id, @UniqueElements String role, User... users) {
-		super();
-		this.id = id;
-		this.role = role;
-		this.users = Stream.of(users).collect(Collectors.toList());
-	}
-	
-	/**
-	 * Add a single user to the list of users. Check if the users list is null and 
-	 * initializes it if it's null.
-	 * @param user User to be added to the users list.
-	 */
-	public void addUser(User user) {
-		if (users == null) {
-			users = new ArrayList<User>();
-		}
-		users.add(user);
-	}
 }
