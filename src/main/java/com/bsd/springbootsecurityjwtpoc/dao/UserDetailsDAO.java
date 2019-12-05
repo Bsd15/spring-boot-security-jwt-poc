@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.bsd.springbootsecurityjwtpoc.domain.Role;
 import com.bsd.springbootsecurityjwtpoc.domain.User;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class UserDetailsDAO implements UserDetails {
 
 	private String userName;
@@ -41,6 +44,7 @@ public class UserDetailsDAO implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		log.debug(this.authorities.toString());
 		return this.authorities;
 	}
 
@@ -56,21 +60,34 @@ public class UserDetailsDAO implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return this.isExpired;
+		log.debug("Account Expired: " + this.isExpired);
+//		Returns negation of the value as it makes much more sense to store
+//		isExpired as false in the database. Thus, here negation of the value is
+//		returned.
+		return !this.isExpired;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return this.isAccountLocked;
+		log.debug("Account Locked: " + this.isAccountLocked);
+//		Returns negation of the value as it makes much more sense to store
+//		isExpired as false in the database. Thus, here negation of the value is
+//		returned.
+		return !this.isAccountLocked;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return this.areCredentialsExpired;
+		log.debug("Credentials Expired: " + this.areCredentialsExpired);
+//		Returns negation of the value as it makes much more sense to store
+//		isExpired as false in the database. Thus, here negation of the value is
+//		returned.
+		return !this.areCredentialsExpired;
 	}
 
 	@Override
 	public boolean isEnabled() {
+//		isEnabled is as is. i.e isEnabled is set true in database also.
 		return this.isEnabled;
 	}
 
