@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.bsd.springbootsecurityjwtpoc.domain.Role;
@@ -22,11 +23,13 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 
 	private UserService userService;
 	private RoleService roleService;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
-	public POCSeedDataCommandLineRunner(UserService userService, RoleService roleService) {
+	public POCSeedDataCommandLineRunner(UserService userService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userService = userService;
 		this.roleService = roleService;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
 	@Override
@@ -44,11 +47,11 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 		roles.add(adminRole);
 		User dummyUser = new User();	
 		dummyUser.setUserName("test");
-		dummyUser.setPassword("test");
+		dummyUser.setPassword(this.bCryptPasswordEncoder.encode("test"));
 		dummyUser.setEmail("e@mail.com");
 		dummyUser.setFirstName("First Name");
 		dummyUser.setLastName("Last Name");
-		dummyUser.setRoles(roles);
+		dummyUser.setRoles(roles);	
 		dummyUser.setAccountLocked(false);
 		dummyUser.setEnabled(true);
 		dummyUser.setExpired(false);
