@@ -34,38 +34,38 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 //		User dummyUser = userService.getUserByUserName("test1");
 //		log.debug(dummyUser.toString());
 //		Create a dummy user object and save it to the user Database.
-//		Role userRole = new Role();
-//		userRole.setRole("ROLE_USER");
-//		log.debug(userRole.toString());
-//		Role adminRole = new Role();
-//		adminRole.setRole("ROLE_ADMIN");
-//		Set<Role> roles = new HashSet<Role>();
-////		roles.add(userRole);
-//		roles.add(adminRole);
-//		User dummyUser = new User();	
-//		dummyUser.setUserName("adminTest");
-//		dummyUser.setPassword("test");
-//		dummyUser.setEmail("e@mail.com");
-//		dummyUser.setFirstName("First Name");
-//		dummyUser.setLastName("Last Name");
-//		dummyUser.setRoles(roles);
-//		dummyUser.setAccountLocked(false);
-//		dummyUser.setEnabled(true);
-//		dummyUser.setExpired(false);
-//		dummyUser.setCredentialsExpired(false);
+		Role userRole = new Role();
+		userRole.setRole("ROLE_USER");
+		log.debug(userRole.toString());
+		Role adminRole = new Role();
+		adminRole.setRole("ROLE_ADMIN");
+		Set<Role> roles = new HashSet<Role>();
+		roles.add(userRole);
+		roles.add(adminRole);
+		User dummyUser = new User();	
+		dummyUser.setUserName("test");
+		dummyUser.setPassword("test");
+		dummyUser.setEmail("e@mail.com");
+		dummyUser.setFirstName("First Name");
+		dummyUser.setLastName("Last Name");
+		dummyUser.setRoles(roles);
+		dummyUser.setAccountLocked(false);
+		dummyUser.setEnabled(true);
+		dummyUser.setExpired(false);
+		dummyUser.setCredentialsExpired(false);
 //		log.debug(dummyUser.toString());
-//		try {
-//			userService.saveUser(dummyUser);
-//		} catch (UserAlreadyExistsException e) {
-//			log.error(e.getClass() + " CommandLineRunner Error.");
-//		}
-//		try {
-//			User fetchedDummyUser = userService.getUserByUserName("test");
-//			Set<Role> fetchedDummyUserRoles = fetchedDummyUser.getRoles();
-//			log.debug(fetchedDummyUserRoles.toString());
-//		} catch (UsernameNotFoundException e) {
-//			log.error(e.getClass() + " CommandLineRunner Error on line 46 find the user by username");
-//		}
+		try {
+			userService.saveUser(dummyUser);
+		} catch (UserAlreadyExistsException e) {
+			log.error(e.getClass() + " CommandLineRunner Error.");
+		}
+		try {
+			User fetchedDummyUser = userService.getUserByUserName("test");
+			Set<Role> fetchedDummyUserRoles = fetchedDummyUser.getRoles();
+			log.debug(fetchedDummyUserRoles.toString());
+		} catch (UsernameNotFoundException e) {
+			log.error(e.getClass() + " CommandLineRunner Error on line 46 find the user by username");
+		}
 
 	}
 
