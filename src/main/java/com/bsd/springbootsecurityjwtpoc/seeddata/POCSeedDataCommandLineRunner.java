@@ -31,16 +31,19 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User dummyUser = userService.getUserByUserName("test1");
-		log.debug(dummyUser.toString());
+//		User dummyUser = userService.getUserByUserName("test1");
+//		log.debug(dummyUser.toString());
 //		Create a dummy user object and save it to the user Database.
 //		Role userRole = new Role();
 //		userRole.setRole("ROLE_USER");
 //		log.debug(userRole.toString());
+//		Role adminRole = new Role();
+//		adminRole.setRole("ROLE_ADMIN");
 //		Set<Role> roles = new HashSet<Role>();
-//		roles.add(userRole);
-//		User dummyUser = new User();
-//		dummyUser.setUserName("test1");
+////		roles.add(userRole);
+//		roles.add(adminRole);
+//		User dummyUser = new User();	
+//		dummyUser.setUserName("adminTest");
 //		dummyUser.setPassword("test");
 //		dummyUser.setEmail("e@mail.com");
 //		dummyUser.setFirstName("First Name");
