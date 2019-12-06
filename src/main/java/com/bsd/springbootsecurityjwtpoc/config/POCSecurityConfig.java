@@ -22,11 +22,13 @@ public class POCSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private UserDetailsService userDetailsService;
 	private JwtRequestFilter jwtRequestFilter;
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
 	@Autowired
-	public POCSecurityConfig(UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
+	public POCSecurityConfig(UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
 		this.userDetailsService = userDetailsService;
 		this.jwtRequestFilter = jwtRequestFilter;
+		this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
 	}
 
 	@Override
@@ -47,6 +49,9 @@ public class POCSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.csrf()
 				.disable()
+			.exceptionHandling()
+				.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+			.and()
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //		Add a filter to validate the token with every request
