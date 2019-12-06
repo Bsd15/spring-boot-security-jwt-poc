@@ -22,6 +22,7 @@ import com.bsd.springbootsecurityjwtpoc.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
+@RequestMapping("api/v1/")
 @Slf4j
 public class POCRestController {
 	
@@ -42,12 +43,12 @@ public class POCRestController {
 		return new ResponseEntity<String>("Spring Security POC", HttpStatus.OK);
 	}
 	
-	@GetMapping("/home")
+	@GetMapping("home")
 	public ResponseEntity<String> home(){
 		return ResponseEntity.ok("Home");
 	}
 	
-	@PostMapping("/authenticate")
+	@PostMapping("authenticate")
 	public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO authenticationRequest) throws BadCredentialsException {
 		log.debug(authenticationRequest.toString());
 		try {
