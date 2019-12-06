@@ -36,8 +36,10 @@ public class POCSecurityConfig extends WebSecurityConfigurerAdapter {
 //		http.authorizeRequests().antMatchers("/home").hasRole("USER").antMatchers("/authenticate").permitAll().and().formLogin();
 		http
 			.authorizeRequests()
-			.anyRequest()
+			.antMatchers("/api/v1/", "/api/v1/authenticate")
 				.permitAll()
+			.antMatchers("/api/v1/**")
+				.hasRole("USER")
 			.and()
 			.csrf()
 				.disable();
