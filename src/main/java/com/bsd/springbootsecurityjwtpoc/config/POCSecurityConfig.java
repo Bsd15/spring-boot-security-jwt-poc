@@ -33,7 +33,14 @@ public class POCSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/home").hasRole("USER").antMatchers("/authenticate").permitAll().and().formLogin();
+//		http.authorizeRequests().antMatchers("/home").hasRole("USER").antMatchers("/authenticate").permitAll().and().formLogin();
+		http
+			.authorizeRequests()
+			.anyRequest()
+				.permitAll()
+			.and()
+			.csrf()
+				.disable();
 	}
 	
 	/**
