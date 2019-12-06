@@ -9,20 +9,24 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.bsd.springbootsecurityjwtpoc.filters.JwtRequestFilter;
 
 @Configuration
 @EnableWebSecurity
 public class POCSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private UserDetailsService userDetailsService;
+	private JwtRequestFilter jwtRequestFilter;
 
 	@Autowired
-	public POCSecurityConfig(UserDetailsService userDetailsService) {
+	public POCSecurityConfig(UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
 		this.userDetailsService = userDetailsService;
+		this.jwtRequestFilter = jwtRequestFilter;
 	}
 
 	@Override
@@ -42,7 +46,11 @@ public class POCSecurityConfig extends WebSecurityConfigurerAdapter {
 				.hasRole("USER")
 			.and()
 			.csrf()
-				.disable();
+				.disable()
+			.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//		Add a filter to validate the token with every request
+		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	/**
