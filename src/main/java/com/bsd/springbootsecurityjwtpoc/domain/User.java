@@ -61,10 +61,28 @@ public class User {
 	@NotNull
 	private boolean isCredentialsExpired;
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@ManyToMany /*
+				 * (cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+				 * CascadeType.REFRESH })
+				 */
 	@JoinTable(name = "users_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
+	/**
+	 * All args constructor with optional parameters for Roles.
+	 * 
+	 * @param id                   int
+	 * @param userName             String
+	 * @param password             String
+	 * @param firstName            String
+	 * @param lastName             String
+	 * @param email                String
+	 * @param isEnabled            boolean
+	 * @param isAccountLocked      boolean
+	 * @param isExpired            boolean
+	 * @param isCredentialsExpired boolean
+	 * @param roles                Array
+	 */
 	public User(int id, @NotBlank String userName, @NotBlank String password, @NotBlank String firstName,
 			@NotBlank String lastName, @NotBlank String email, @NotBlank boolean isEnabled,
 			@NotBlank boolean isAccountLocked, @NotBlank boolean isExpired, @NotBlank boolean isCredentialsExpired,
@@ -80,6 +98,125 @@ public class User {
 		this.isExpired = isExpired;
 		this.isCredentialsExpired = isCredentialsExpired;
 		this.roles = Stream.of(roles).collect(Collectors.toSet());
+	}
+
+	/**
+	 * User contructor without ID and Set<Roles> as param
+	 * 
+	 * @param userName
+	 * @param password
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @param isEnabled
+	 * @param isAccountLocked
+	 * @param isExpired
+	 * @param isCredentialsExpired
+	 * @param roles
+	 */
+	public User(@NotBlank String userName, @NotBlank String password, @NotBlank String firstName,
+			@NotBlank String lastName, @NotBlank String email, @NotNull boolean isEnabled,
+			@NotNull boolean isAccountLocked, @NotNull boolean isExpired, @NotNull boolean isCredentialsExpired,
+			Set<Role> roles) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.isEnabled = isEnabled;
+		this.isAccountLocked = isAccountLocked;
+		this.isExpired = isExpired;
+		this.isCredentialsExpired = isCredentialsExpired;
+		this.roles = roles;
+	}
+
+	/**
+	 * User contructor without ID and Roles as optional param.
+	 * 
+	 * @param userName
+	 * @param password
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @param isEnabled
+	 * @param isAccountLocked
+	 * @param isExpired
+	 * @param isCredentialsExpired
+	 * @param roles
+	 */
+	public User(@NotBlank String userName, @NotBlank String password, @NotBlank String firstName,
+			@NotBlank String lastName, @NotBlank String email, @NotNull boolean isEnabled,
+			@NotNull boolean isAccountLocked, @NotNull boolean isExpired, @NotNull boolean isCredentialsExpired,
+			Role... roles) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.isEnabled = isEnabled;
+		this.isAccountLocked = isAccountLocked;
+		this.isExpired = isExpired;
+		this.isCredentialsExpired = isCredentialsExpired;
+		this.roles = Stream.of(roles).collect(Collectors.toSet());
+	}
+
+	/**
+	 * User constructor without Id and role params.
+	 * 
+	 * @param userName
+	 * @param password
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @param isEnabled
+	 * @param isAccountLocked
+	 * @param isExpired
+	 * @param isCredentialsExpired
+	 */
+	public User(@NotBlank String userName, @NotBlank String password, @NotBlank String firstName,
+			@NotBlank String lastName, @NotBlank String email, @NotNull boolean isEnabled,
+			@NotNull boolean isAccountLocked, @NotNull boolean isExpired, @NotNull boolean isCredentialsExpired) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.isEnabled = isEnabled;
+		this.isAccountLocked = isAccountLocked;
+		this.isExpired = isExpired;
+		this.isCredentialsExpired = isCredentialsExpired;
+		this.roles = new HashSet<Role>();
+	}
+
+	/**
+	 * User constructor with userName, password, firstname, lastname and email fields. All
+	 * remaining boolean fields are set to default values.
+	 *    isEnabled = true
+	 *    isAccountLocked = false
+	 *    isExpired = false
+	 *    isCredentialsExpired = false
+	 * NOTE: You have to explicitly add roles.
+	 * @param userName
+	 * @param password
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 */
+	public User(@NotBlank String userName, @NotBlank String password, @NotBlank String firstName,
+			@NotBlank String lastName, @NotBlank String email) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.isEnabled = true;
+		this.isAccountLocked = false;
+		this.isExpired = false;
+		this.isCredentialsExpired = false;
 	}
 
 //	Add role to roles set
