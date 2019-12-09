@@ -26,7 +26,8 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
-	public POCSeedDataCommandLineRunner(UserService userService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public POCSeedDataCommandLineRunner(UserService userService, RoleService roleService,
+			BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userService = userService;
 		this.roleService = roleService;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -34,42 +35,32 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		User dummyUser = userService.getUserByUserName("test1");
-//		log.debug(dummyUser.toString());
-//		Create a dummy user object and save it to the user Database.
-		Role userRole = new Role();
-		userRole.setRole("ROLE_USER");
+//		Save Admin role to database
+		roleService.save(new Role("ROLE_ADMIN"));
+//		Save User role to database
+		roleService.save(new Role("ROLE_USER"));
+//		Fetch admin and user roles from database
+		Role adminRole = roleService.getRoleByName("ROLE_ADMIN");
+		Role userRole = roleService.getRoleByName("ROLE_USER");
+		log.debug("ADMIN ROLE: " + adminRole.toString());
+		log.debug("USER ROLE: " + userRole.toString());
+//		Create a user with "USER" role.
+		User user1 = new User("test", "test", "First Name", "Last Name", "e@mail.com", true, false, false, false);
+		user1.getRoles().add(userRole);
 		log.debug(userRole.toString());
-		Role adminRole = new Role();
-		adminRole.setRole("ROLE_ADMIN");
-		Set<Role> roles = new HashSet<Role>();
-		roles.add(userRole);
-		roles.add(adminRole);
-		User dummyUser = new User();	
-		dummyUser.setUserName("test");
-		dummyUser.setPassword(this.bCryptPasswordEncoder.encode("test"));
-		dummyUser.setEmail("e@mail.com");
-		dummyUser.setFirstName("First Name");
-		dummyUser.setLastName("Last Name");
-		dummyUser.setRoles(roles);	
-		dummyUser.setAccountLocked(false);
-		dummyUser.setEnabled(true);
-		dummyUser.setExpired(false);
-		dummyUser.setCredentialsExpired(false);
-//		log.debug(dummyUser.toString());
-		try {
-			userService.saveUser(dummyUser);
-		} catch (UserAlreadyExistsException e) {
-			log.error(e.getClass() + " CommandLineRunner Error.");
-		}
-		try {
-			User fetchedDummyUser = userService.getUserByUserName("test");
-			Set<Role> fetchedDummyUserRoles = fetchedDummyUser.getRoles();
-			log.debug(fetchedDummyUserRoles.toString());
-		} catch (UsernameNotFoundException e) {
-			log.error(e.getClass() + " CommandLineRunner Error on line 46 find the user by username");
-		}
-
+//		Save user1
+		userService.saveUser(user1);
+//		Create adminUser
+		User adminUser1 = new User("adminTest", "test", "First Name", "Last Name", "e@mail.com", true, false, false, false, userRole, adminRole);
+		log.debug(user1.toString());
+//		Save adminUser1
+		userService.saveUser(adminUser1);
+		log.debug(adminUser1.toString());
+		User user2 = new User("test2", "test", "First Name", "Last name", "e@mail.com");
+		user2.addRole(userRole);
+//		Log the user object received after saving user2.
+		log.debug(
+				userService.saveUser(user2).toString()
+				);
 	}
-
 }
