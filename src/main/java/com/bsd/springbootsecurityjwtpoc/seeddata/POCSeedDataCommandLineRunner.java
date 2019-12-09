@@ -44,23 +44,30 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 		Role userRole = roleService.getRoleByName("ROLE_USER");
 		log.debug("ADMIN ROLE: " + adminRole.toString());
 		log.debug("USER ROLE: " + userRole.toString());
+//		Generate bcrypt hash for string "test" as it will be used as password
+//		for all the users below
+		final String password = bCryptPasswordEncoder.encode("test");
 //		Create a user with "USER" role.
-		User user1 = new User("test", "test", "First Name", "Last Name", "e@mail.com", true, false, false, false);
+		User user1 = new User("test", password, "First Name", "Last Name", "e@mail.com", true, false, false, false);
 		user1.getRoles().add(userRole);
 		log.debug(userRole.toString());
 //		Save user1
 		userService.saveUser(user1);
 //		Create adminUser
-		User adminUser1 = new User("adminTest", "test", "First Name", "Last Name", "e@mail.com", true, false, false, false, userRole, adminRole);
+		User adminUser1 = new User("adminTest", password, "First Name", "Last Name", "e@mail.com", true, false, false, false, userRole, adminRole);
 		log.debug(user1.toString());
 //		Save adminUser1
 		userService.saveUser(adminUser1);
 		log.debug(adminUser1.toString());
-		User user2 = new User("test2", "test", "First Name", "Last name", "e@mail.com");
+		User user2 = new User("test2", password, "First Name", "Last name", "e@mail.com");
 		user2.addRole(userRole);
 //		Log the user object received after saving user2.
 		log.debug(
 				userService.saveUser(user2).toString()
 				);
+//		User with only admin role
+		User onlyAdminRoleUser = new User("adminTest2", password, "First Name", "Last Name", "e@mail.com");
+		onlyAdminRoleUser.addRole(adminRole);
+		userService.saveUser(onlyAdminRoleUser);
 	}
 }
