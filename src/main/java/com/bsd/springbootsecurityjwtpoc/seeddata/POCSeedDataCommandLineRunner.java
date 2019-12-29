@@ -25,10 +25,6 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 	private UserService userService;
 	private RoleService roleService;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	@Value("${role.user}")
-	private String userRoleString;
-	@Value("${role.admin}")
-	private String adminRoleString;
 
 	@Autowired
 	public POCSeedDataCommandLineRunner(UserService userService, RoleService roleService,
@@ -40,8 +36,6 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		log.debug(userRoleString);
-		log.debug(adminRoleString);
 //		Save Admin role to database
 		roleService.save(new Role("ROLE_ADMIN"));
 //		Save User role to database
@@ -61,7 +55,8 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 //		Save user1
 		userService.saveUser(user1);
 //		Create adminUser
-		User adminUser1 = new User("adminTest", password, "First Name", "Last Name", "e@mail.com", true, false, false, false, userRole, adminRole);
+		User adminUser1 = new User("adminTest", password, "First Name", "Last Name", "e@mail.com", true, false, false,
+				false, userRole, adminRole);
 		log.debug(user1.toString());
 //		Save adminUser1
 		userService.saveUser(adminUser1);
@@ -69,9 +64,7 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 		User user2 = new User("test2", password, "First Name", "Last name", "e@mail.com");
 		user2.addRole(userRole);
 //		Log the user object received after saving user2.
-		log.debug(
-				userService.saveUser(user2).toString()
-				);
+		log.debug(userService.saveUser(user2).toString());
 //		User with only admin role
 		User onlyAdminRoleUser = new User("adminTest2", password, "First Name", "Last Name", "e@mail.com");
 		onlyAdminRoleUser.addRole(adminRole);
