@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +25,10 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 	private UserService userService;
 	private RoleService roleService;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Value("${role.user}")
+	private String userRoleString;
+	@Value("${role.admin}")
+	private String adminRoleString;
 
 	@Autowired
 	public POCSeedDataCommandLineRunner(UserService userService, RoleService roleService,
@@ -35,6 +40,8 @@ public class POCSeedDataCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		log.debug(userRoleString);
+		log.debug(adminRoleString);
 //		Save Admin role to database
 		roleService.save(new Role("ROLE_ADMIN"));
 //		Save User role to database
