@@ -2,6 +2,7 @@ package com.bsd.springbootsecurityjwtpoc.controllers;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.AfterEach;
@@ -18,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -50,11 +52,52 @@ class POCRestControllerTest {
 
 	@Test
 	@WithMockUser(value = "test")
-	void test() {
+	void givenGetRequestShouldReturnOk() {
 		try {
 			mockMvc
-				.perform(get("api/v1/").contentType(MediaType.APPLICATION_JSON))
+				.perform(get("/api/v1/").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	@WithAnonymousUser
+	void givenAnonymusUserShouldReturnUnauthorized() {
+		try {
+			mockMvc
+				.perform(get("/api/v1/home").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isUnauthorized())
+				.andDo(print());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	@WithMockUser("test")
+	void givenValidUserShouldReturnOk() {
+		try {
+			mockMvc
+				.perform(get("/api/v1/home").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	@WithMockUser(username = "test", roles = {"ADMIN"})
+	void givenUserWithAdminRoleOnlyShouldReturnUnauthorized() {
+		try {
+			mockMvc
+				.perform(get("/api/v1/home").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isForbidden())
+				.andDo(print());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
